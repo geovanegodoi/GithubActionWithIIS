@@ -31,6 +31,6 @@ jobs:
         run: |
           stop-webapppool WebApplication
           stop-iissite -Name WebApplication -Confirm: $false
-          Copy-Item C:/temp/WebApplication/deploy/ C:/WEBDATA/WebApplication/webapp-1 -Recurse -Force
+          Copy-Item C:/temp/WebApplication/deploy/* C:/WEBDATA/WebApplication/webapp-1 -Recurse -Force
           start-webapppool WebApplication
           start-iissite WebApplication
