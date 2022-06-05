@@ -26,11 +26,32 @@ jobs:
         run: |
           cd GithubActionWithIIS
           msbuild /t:rebuild /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=PublishProfile
-      
+
+  deploy-webapp-01:
+    needs: build
+    name: Deploy 01
+    runs-on: self-hosted
+    steps:
+
       - name: Deploy to IIS
         run: |
           stop-webapppool WebApplication
           stop-iissite -Name WebApplication -Confirm: $false
           Copy-Item C:/temp/WebApplication/deploy/* C:/WEBDATA/WebApplication/webapp-1 -Recurse -Force
+          start-webapppool WebApplication
+          start-iissite WebApplication
+
+
+  deploy-webapp-02:
+    needs: build
+    name: Deploy 02
+    runs-on: self-hosted
+    steps:
+
+      - name: Deploy to IIS
+        run: |
+          stop-webapppool WebApplication
+          stop-iissite -Name WebApplication -Confirm: $false
+          Copy-Item C:/temp/WebApplication/deploy/* C:/WEBDATA/WebApplication/webapp-2 -Recurse -Force
           start-webapppool WebApplication
           start-iissite WebApplication
