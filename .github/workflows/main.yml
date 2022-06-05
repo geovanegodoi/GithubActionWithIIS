@@ -26,3 +26,8 @@ jobs:
         run: |
           cd GithubActionWithIIS
           msbuild /t:rebuild /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=PublishProfile
+      
+      - uses: cschleiden/webdeploy-action@v1
+        with:
+          webSiteName: 'webapp01'
+          package: ${{ format('{0}\dist', runner.workspace) }}
