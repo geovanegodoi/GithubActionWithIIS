@@ -31,8 +31,12 @@ jobs:
     needs: build
     name: Deploy 01
     runs-on: self-hosted
+    
+    environment: 
+      name: WEBAPP01
+      url: http://localhost:8080/webapp01
+    
     steps:
-
       - name: Deploy to IIS
         run: |
           stop-webapppool WebApplication
@@ -46,8 +50,12 @@ jobs:
     needs: build
     name: Deploy 02
     runs-on: self-hosted
+    
+    environment: 
+      name: WEBAPP02
+      url: http://localhost:8080/webapp02
+    
     steps:
-
       - name: Deploy to IIS
         run: |
           stop-webapppool WebApplication
