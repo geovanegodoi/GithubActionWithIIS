@@ -1,0 +1,22 @@
+name: Deploy IIS
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2.4.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build and Publish
+        shell: cmd
+        run: |
+          cd GithubActionWithIIS
+          msbuild /t:rebuild /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=PublishProfile
