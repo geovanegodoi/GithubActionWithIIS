@@ -39,11 +39,13 @@ jobs:
     steps:
       - name: Deploy to IIS
         run: |
-          stop-webapppool WebApplication
-          stop-iissite -Name WebApplication -Confirm: $false
-          Copy-Item C:/temp/WebApplication/deploy/* C:/WEBDATA/WebApplication/webapp-1 -Recurse -Force
-          start-webapppool WebApplication
-          start-iissite WebApplication
+          Copy-Item C:/temp/WebApplication/deploy/* C:/WEBDATA/WebApplication/webapp-1 -Recurse -Force        
+          Restart-WebItem -PSPath 'IIS:\AppPools\WebApplication'
+          Restart-WebItem -PSPath 'IIS:\Sites\WebApplication'
+#          stop-webapppool WebApplication
+#          stop-iissite -Name WebApplication -Confirm: $false
+#          start-webapppool WebApplication
+#          start-iissite WebApplication
 
 
   deploy-webapp-02:
@@ -58,8 +60,10 @@ jobs:
     steps:
       - name: Deploy to IIS
         run: |
-          stop-webapppool WebApplication
-          stop-iissite -Name WebApplication -Confirm: $false
           Copy-Item C:/temp/WebApplication/deploy/* C:/WEBDATA/WebApplication/webapp-2 -Recurse -Force
-          start-webapppool WebApplication
-          start-iissite WebApplication
+          Restart-WebItem -PSPath 'IIS:\AppPools\WebApplication'
+          Restart-WebItem -PSPath 'IIS:\Sites\WebApplication'
+#          stop-webapppool WebApplication
+#          stop-iissite -Name WebApplication -Confirm: $false
+#          start-webapppool WebApplication
+#          start-iissite WebApplication
